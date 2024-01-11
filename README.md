@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/d-koding/Classwork-Showcase">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://static.vecteezy.com/system/resources/previews/030/507/229/original/pixel-art-illustration-pencil-pixelated-pencil-pencil-office-icon-pixelated-for-the-pixel-art-game-and-icon-for-website-and-video-game-old-school-retro-vector.jpg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Classwork-Showcase</h3>
