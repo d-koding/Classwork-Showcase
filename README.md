@@ -34,19 +34,14 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">image_manipulation</h3>
+<h3 align="center">Classwork-Showcase</h3>
 
   <p align="center">
-    "Showcase of ability to modify and warp ppm files"
+    "A portfolio of classwork through Intro CS to Discrete Mathemetics and Functional Programming"
     <br />
     <a href="https://github.com/d-koding/Classwork-Showcase"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/d-koding/Classwork-Showcase">View Demo</a>
-    ·
-    <a href="https://github.com/d-koding/Classwork-Showcase/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/d-koding/Classwork-Showcase/issues">Request Feature</a>
   </p>
 </div>
 
