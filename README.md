@@ -85,7 +85,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `d-koding`, `Classwork-Showcase`, `twitter_handle`, www.linkedin.com/in/dylan-o-connor, Google, dkaoala@gmail.com, `image_manipulation`, `"Showcase of ability to modify and warp ppm files"`
+Description here
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -212,7 +212,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [license-shield]: https://img.shields.io/github/license/d-koding/Classwork-Showcase.svg?style=for-the-badge
 [license-url]: https://github.com/d-koding/Classwork-Showcase/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://linkedin.com/in/dylan-o-connor
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
