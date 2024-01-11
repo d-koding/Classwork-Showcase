@@ -54,8 +54,6 @@
       <a href="#about-the-project">About The Project</a>
       </ul>
     </li>
-    <li>
-    </li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
