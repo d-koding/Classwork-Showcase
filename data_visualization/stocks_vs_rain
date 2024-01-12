@@ -1,0 +1,183 @@
+"""
+    CS051P Lab Assignments: Stock v.s. Rain
+
+    Author: Dylan O'Connor
+
+    Date:   November 9th, 2022
+
+    The goal of this assignment is to familiarize you with data analysis
+    and visualization. You'll practice handling files in csv format,
+    create and manipulate Python dictionaries, and do some basic plotting
+    using the matplotlib package.
+"""
+import csv
+import matplotlib.pyplot as plt
+
+
+def parse_rainfall(fname):
+    """
+    Takes a weather dataset and returns a dictionary with the dates as keys and precipitations as values
+    :param fname: (str) a file name
+    :return: (dict) a dictionary organized by dates and values
+    """
+    # opens csv file and initializes reader
+    file1 = open(fname, "r")
+    reading = csv.reader(file1)
+    next(reading)
+
+    # initializes new dictionary
+    dict1 = {}
+
+    # for each line in file, add a date and precipitation to dictionary
+    for line in reading:
+        if line[1] != "NA":
+            dict1[line[0]] = float(line[1])
+
+    # return final dictionary
+    return dict1
+
+
+def date_converter(date):
+    """
+    Converts dates into YYYY-MM-DD format
+    :param date: (str) a date
+    :return: (str) a formatted date
+    """
+    # splits date into list
+    dates = date.split("/")
+
+    # converts year
+    year = int(dates[2]) + 2000
+
+    # converts month
+    if int(dates[0]) < 10:
+        month = "0" + dates[0]
+    else:
+        month = dates[0]
+
+    # converts day
+    if int(dates[1]) < 10:
+        day = "0" + dates[1]
+    else:
+        day = dates[1]
+
+    # returns years, months and days format
+    return str(year) + "-" + month + "-" + day
+
+
+def parse_stock(fname, sym):
+    """
+    Takes a stock dataset and returns a dictionary that contains the date and change in value of specified stock
+    :param fname: (str) name of a csv file
+    :param sym: (str) name of a stock
+    :return: (dict) the dictionary of dates and values
+    """
+    # opens csv file and initializes reader
+    file1 = open(fname, "r")
+    reading = csv.reader(file1)
+    next(reading)
+
+    # initializes new dictionary
+    dict1 = {}
+
+    # for each line in file, add a date and stock change to dictionary
+    for line in reading:
+        if len(line) > 0:
+            if line[6] == sym and line[1] != "" and line[4] != "":
+                key = date_converter(line[0])
+                dict1[key] = round(float(line[4]) - float(line[1]), 3)
+
+    # return final dictionary
+    return dict1
+
+
+def correlate_data(stock_dict, rain_dict):
+    """
+    Correlates stock dictionary and rain dictionary
+    :param stock_dict: (dict) a dictionary containing dates and stock changes
+    :param rain_dict: (dict) a dictionary containing dates and precipitation rates
+    :return: (list) a list of
+    """
+    # established new list
+    new_list = []
+
+    # for each key in stock dictionary, write into an empty list
+    for key in stock_dict.keys():
+        entry = []
+
+        # if key is also in rain dictionary, append both values associated with key onto final list
+        if rain_dict.get(key) is not None:
+            entry.append(stock_dict[key])
+            entry.append(rain_dict[key])
+            new_list.append(entry)
+
+    # return final list
+    return new_list
+
+
+def scatter_plot(data, format, name, done):
+    """
+    Plots a dataset on a graph
+    :param data: (list) a list of lists of 2 data values
+    :param format: (str) specified format of graph
+    :param name: (str) name of graph line
+    :param done: (bool) Tr
+
+    ue/False to determine if last plot written
+    """
+    # establishes x and y axis
+    x = []
+    y = []
+
+    # for each dataset, append to x and y
+    for elem in data:
+        x.append(elem[1])
+        y.append(elem[0])
+
+    # plots the x and y lists
+    plt.plot(x, y, format, label=name)
+
+    # checks if last plot
+    if done:
+
+        # plots legend, labels, titles, shows plot
+        plt.legend()
+        plt.xlabel("rainfall")
+        plt.ylabel("price change")
+        plt.title("rainfall vs price change")
+        plt.show()
+
+
+def main():
+    """
+    1. Ask the user for an input of a rainfall data file
+    2. Ask the user for an input of a stock data file
+    3. Ask the user for two stock symbols
+        Note: One of them should be either Microsoft (MSFT) or 
+        Amazon (AMZN) headquartered in Seattle, the other should 
+        be a company primarily located in elsewhere
+    4. Call parse_rainfall and parse_stock for data processing
+    5. Call correlated_data and scatter_plot for data analysis and visualizaton
+    """
+    # asks user for file names and stock symbol names
+    rain_file = input("Enter the name of a rainfall data file:\n\t")
+    stock_file = input("Enter the name of a stock data file:\n\t")
+    sym1 = input("Enter a first stock symbol (e.g. MSFT or AMZN):\n\t")
+    sym2 = input("Enter a second stock symbol (not head-quartered in Seattle):\n\t")
+
+    # establishes stock dictionary and rain dictionary
+    stock_price1 = parse_stock(stock_file, sym1)
+    stock_price2 = parse_stock(stock_file, sym2)
+    rain_rate = parse_rainfall(rain_file)
+
+    # uses rain dictionary and stock dictionaries to correlate into lists of lists
+    dataset1 = correlate_data(stock_price1, rain_rate)
+    dataset2 = correlate_data(stock_price2, rain_rate)
+
+    # plots lists of lists into graph, named after stock symbols being tracked
+    scatter_plot(dataset1, "b+", sym1, False)
+    scatter_plot(dataset2, "rx", sym2, True)
+
+
+if __name__ == '__main__':
+    main()
