@@ -1,0 +1,232 @@
+"""
+    CS051P Lab Assignments: Recursive Graphics
+
+    Name: Dylan O'Connor
+
+    Date: October 26th, 2022
+
+    The goal of this assignment is to familiarize you with recursion,
+    including thinking and writing recursive functions.
+"""
+from turtle import *
+from math import sqrt
+
+
+def draw_triangle(length, color):
+    """
+    Draw equilateral triangle, from the current position.
+    :param length: (int) side length in pixels
+    :param color: (string) line color
+
+    end up in original position and heading
+    """
+    # set color and drop the pen
+    pencolor(color)
+    pendown()
+
+    # three sides, w/120 degree exterior angles
+    # Note: this function demonstrates poor style (it uses repeated code)
+    forward(length)
+    left(120)
+    forward(length)
+    left(120)
+    forward(length)
+    left(120)
+
+    # we should now be at our original position/heading
+
+
+def draw_polygon(n, length):
+    """
+    Draws a polygon of any number of sides and length
+    :param n: (int) number of sides of polygon
+    :param length: (int) length of side of polygon
+    """
+    # for loop that ends after n loops
+    for i in range(n):
+
+        # moves turtle forward length pixels and turns 360 / n degrees
+        forward(length)
+        left(360 / n)
+
+
+def stairs(x, y, length):
+    """
+    Draws a recursive staircase of any starting length and position
+    :param x: (int) x-axis of staircase start
+    :param y: (int) y-axis of staircase start
+    :param length: (int) length of staircase largest stair
+    """
+    # base case: length < min value
+    # recursive case: a square plus 2 squares with 1/2 side lengths to the right and above
+
+    # if statement that runs when length is smaller or equal to 10
+    if length < 10:
+
+        # sets position of pen to x, y coordinates
+        penup()
+        setposition(x, y)
+        pendown()
+
+        # returns 0
+        return 0
+
+    else:
+        # calls stairs at x + length and y, as well as halving what length equals
+        n1 = stairs(x + length, y, length / 2)
+
+        # calls stairs at x, y + length, as well as halving what length equals
+        n2 = stairs(x, y + length, length / 2)
+
+        # resets position of pen
+        setposition(x, y)
+
+        # calls draw_polygon to draw a new square
+        draw_polygon(4, length)
+
+        # returns the recursive count of stairs
+        return n1 + n2 + 1
+
+
+def main_part1():
+    """
+    Draws a dot and a triangle in the center, then a set of polygons, and a recursive stair
+    """
+    speed(100000)
+    # draw a dot of size 5 in the center of the screen
+    dot(5)
+
+    # fancy geometry to calculate the starting point of an equilateral triangle at
+    # the center of the screen
+    # If you understand the math, great! If not, that's fine. Don't spend time 
+    # worrying about it. This isn't a geometry class. 
+    side_len = 60
+    triangle_height = sqrt(side_len**2 - (side_len/2)**2) # use Pythagorean thm
+    centroid_height = triangle_height/3  # centroid is 1/3 up the height
+    y_init = -1 * centroid_height
+    x_init = -1 * (side_len/2)
+
+    # draw a single triangle of size 60 in the center of the screen
+    penup()
+    setposition(x_init, y_init)
+    pendown()
+    setheading(0)
+    draw_triangle(60, "black")
+
+    # draws a triangle of size 10 in corner of screen
+    y_val = 100
+    penup()
+    setposition(-200, y_val)
+    pendown()
+    draw_polygon(3, 10)
+
+    # draws a square of size 10 next to triangle
+    penup()
+    setposition(-175, y_val)
+    pendown()
+    draw_polygon(4, 10)
+
+    # draws a hexagon of size 10 next to square
+    penup()
+    setposition(-150, y_val)
+    pendown()
+    draw_polygon(6, 10)
+
+    # draws a dodecagon of size 10 next to square
+    penup()
+    setposition(-110, y_val)
+    pendown()
+    draw_polygon(12, 10)
+
+    # draws a 32 sided polygon of size 5 next to dodecagon
+    penup()
+    setposition(-50, y_val)
+    pendown()
+    draw_polygon(32, 5)
+
+    # calls stairs function at -300, -300 coordinates with a max size of 200 pixels
+    stairs(-500, -400, 400)
+
+    # hide turtle and preserve the display
+    hideturtle()
+    done()
+
+
+def flake(length):
+    """
+    Draws a snowflake with eight branches
+    :param length: (int) snowflake branch length
+    :return: (int) number of branches
+    """
+    # for loop that ends after 8 loops
+    for i in range(8):
+
+        # draws line returns to center and rotates to the left 45 degrees
+        forward(length)
+        backward(length)
+        left(45)
+
+    # returns 8
+    return 8
+
+
+def snowflake(x, y, size):
+    """
+    Draws a fractal snowflake with red dots on the edges
+    :param x: (int) the x-axis location of the snowflake
+    :param y: (int) the y-axis location of the snowflake
+    :param size: (int) the size of the largest snowflake
+    :return: (int) the number of branches
+    """
+    # base case: red dots when size < 5
+    # recursive an eight pointed star with eight pointed stars coming off every other branch
+
+    # if statement that runs when size < 5
+    if size < 5:
+
+        # sets position of turtle to set x, y coordinates
+        penup()
+        setposition(x, y)
+        pendown()
+
+        # draws a red dot of size 5
+        dot(5, "red")
+
+        # returns 0
+        return 0
+    else:
+
+        # calls snowflake function 4 times to draw a flake one third of the size on every other branch
+        n1 = snowflake(x + size, y, size / 3)
+        n2 = snowflake(x, y + size, size / 3)
+        n3 = snowflake(x - size, y, size / 3)
+        n4 = snowflake(x, y - size, size / 3)
+
+        # resets turtle position
+        setposition(x, y)
+
+        # draws a snowflake with 8 branches
+        n5 = flake(size)
+
+        # returns the recursive count of branches
+        return n1 + n2 + n3 + n4 + n5
+
+
+def main():
+    """
+    Calls snowflake function to draw a snowflake with 168 branches
+    """
+    # sets speed to max
+    speed(0)
+
+    # draws a snowflake with a max branch length of 100 pixels
+    print(snowflake(0, 0, 100))
+
+    # ends turtle graphics and hides turtle
+    hideturtle()
+    done()
+
+
+if __name__ == '__main__':
+    # main_part1()  # comment this out after you check-in for part 1
+    main()  # uncomment this after you check-in for part 1
