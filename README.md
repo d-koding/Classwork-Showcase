@@ -71,6 +71,8 @@ Portfolio of classwork in Python and Haskell to demonstrate rudimentary coding u
 
 [Caesar Cipher](caesar_ciphers) - showcase of ability to use recursion (haskell based)
 
+[Recursion](recursion) - showcase of recursive graphic creation, eg fractals
+
 [Algorithms](search_performance) - showcase of basic algorithmic understanding
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
