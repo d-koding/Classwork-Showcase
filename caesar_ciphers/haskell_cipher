@@ -1,0 +1,80 @@
+{-# OPTIONS_GHC -Wno-overlapping-patterns #-}
+import Data.Char
+
+{-
+
+Name(s):  <Dylan O'Connor, Bleeker Coyne>
+Date:  <September 24th, 2023>
+
+CSCI 054 - Fall 2023
+Week04 problem set
+
+-}
+
+-- alphabet
+-- helper function to define an alphabet for the ciphers to build off of
+alphabet :: String
+alphabet = ['A'..'Z'] ++ " "
+
+-- sanitize
+-- takes a list of characters returns that list of characters that are all uppercase with all punctuation removed
+sanitize :: [Char] -> [Char]
+sanitize xs = filter (\x -> x `elem` ' ':['A'..'Z']) (map toUpper xs)
+
+-- caesar
+-- shifts a list of characters down or up the alphabet based on an integer
+caesar :: Int -> [Char] -> [Char]
+caesar _ [] = []
+caesar 0 [x] = [x]
+caesar n x = map (shift n) (sanitize x)
+
+-- shift
+-- helper function to shift one character down an alphabet for caesar function
+shift :: Int -> Char -> Char
+shift n x =
+    if x == ' ' then alphabet !!((26 + n) `mod` 27)
+    else alphabet !!(((ord x - ord 'A') + n) `mod` 27)
+
+-- keepFirst
+-- takes a list and deletes all duplicates in the list while retaining its original order
+keepFirst :: (Eq a) => [a] -> [a]
+keepFirst [] = []
+keepFirst xs
+    | last xs `elem` init xs = keepFirst (init xs)
+    | otherwise = keepFirst (init xs) ++ [last xs]
+
+-- subst
+-- takes a pangram and creates a set of tuples with each tuples representing a shift in a character in ['A'..'Z']
+subst :: String -> [(Char, Char)]
+subst xs = zip alphabet (keepFirst (sanitize xs))
+
+-- substloc
+-- helper function that locates a specific tuple based on its first element
+substloc :: Char -> [(Char, Char)] -> (Char, Char)
+substloc x (y:ys)
+    | fst y == toUpper x = y
+    | otherwise = substloc x ys
+
+-- substlocD
+-- helper function that locates a specific tuple based on its last element
+substlocD :: Char -> [(Char, Char)] -> (Char, Char)
+substlocD x (y:ys)
+    | snd y == toUpper x = y
+    | otherwise = substlocD x ys
+
+
+-- substEncipher
+-- takes a pangram string and a string and encodes the string based on the pangram order
+substEncipher :: String -> String -> String
+substEncipher pangram [] = []
+substEncipher pangram (x:xs)
+    | x `elem` alphabet = snd (substloc x (subst (sanitize pangram))) : substEncipher pangram (sanitize xs)
+    | otherwise = substEncipher pangram (sanitize xs)
+
+-- substDecipher
+-- takes a pangram string and an encoded string and decodes the string based on the given pangram, can decode subst encipher
+substDecipher :: String -> String -> String
+substDecipher pangram [] = []
+substDecipher pangram (x:xs)
+    | x `elem` alphabet = fst (substlocD x (subst (sanitize pangram))) : substDecipher pangram (sanitize xs)
+    | otherwise = substDecipher pangram (sanitize xs)
