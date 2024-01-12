@@ -66,6 +66,7 @@
 Portfolio of classwork in Python and Haskell to demonstrate rudimentary coding understanding.
 
 Image Manipulation- ppm file modification
+[image_manipulation](example.txt)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
