@@ -67,6 +67,11 @@ Portfolio of classwork in Python and Haskell to demonstrate rudimentary coding u
 
 [Image Manipulation](image_manipulation) - ppm file modification
 
+[Data Visualization](data_visualization) - visualizing large amounts of data in csv file format
+
+[Caesar Cipher](caesar_ciphers) - showcase of ability to use recursion (haskell based)
+
+[Algorithms](search_performance) - showcase of basic algorithmic understanding
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
