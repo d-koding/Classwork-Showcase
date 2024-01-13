@@ -80,7 +80,7 @@ Portfolio of classwork in Python and Haskell to demonstrate rudimentary coding u
 <!-- CONTACT -->
 ## Contact
 
-Dylan OConnor - dkaoala@gmail.com
+Dylan OConnor
 
 Project Link: [https://github.com/d-koding/Classwork-Showcase](https://github.com/github_username/repo_name)
 
